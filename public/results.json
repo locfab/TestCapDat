@@ -1,7 +1,7 @@
 {
     "meta": {
-        "client": "aaaa",
-        "filename": "aaaa",
+        "client": "aaa",
+        "filename": "aaa",
         "frequency": "daily",
         "deposit": "11:01",
         "format": {
@@ -17,5 +17,5 @@
             "path": "\/home\/user\/Documents\/contacts\/"
         }
     },
-    "type": "product"
+    "type": "contact"
 }

@@ -102,17 +102,18 @@ Route::post('file/create', function (\Illuminate\Http\Request $request){
             }
             else
             {
-                return redirect()->route('welcome')->withInput($request->all())->withErrors($validatedData->errors());
+                return redirect()->route('form')->withInput($request->all())->withErrors($validatedData->errors());
             }
         }
 
     }
     else
     {
-        return redirect()->route('welcome')->withInput($request->all())->withErrors($validatedData->errors());
+        return redirect()->route('form')->withInput($request->all())->withErrors($validatedData->errors());
     }
     $fp = fopen('results.json', 'w');
     fwrite($fp, json_encode($monPetitTableau,JSON_PRETTY_PRINT));
     fclose($fp);
 
+    return redirect('superform')->with('message', 'itSAllGoodMan');;
 });
