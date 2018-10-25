@@ -1,0 +1,20 @@
+{
+    "meta": {
+        "a": "orange",
+        "b": "banana",
+        "c": "apple"
+    },
+    "type": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+    ],
+    "treatment": {
+        "0": "first",
+        "5": "second",
+        "6": "third"
+    }
+}
