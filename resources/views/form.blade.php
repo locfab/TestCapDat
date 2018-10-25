@@ -67,24 +67,31 @@
     <body>
         <div class="flex-center position-ref full-height">
             <div class="content">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 {!! Form::open(array('url' => 'file/create')) !!}
                     {{ Form::token()}}
+                <h1>Metas</h1>
+                    <div class="form-group">
+                        {{ Form::label('client', 'Le nom du Client', array('class' => 'awesome'))}}
+                        {{ Form::text('client')}}
+                    </div>
                     <div class="form-group">
                         {{ Form::label('filename', 'Le nom du fichier', array('class' => 'awesome'))}}
-                        {{ Form::text('filename', "fichier.extention")}}
+                        {{ Form::text('filename', \Illuminate\Support\Facades\Input::old('filename'), array('placeholder' => "fichier.extention"))}}
                     </div>
                     <div class="form-group">
                         {{ Form::label('date', 'date a choisir', array('class' => 'awesome'))}}
                         {{ Form::date('date')}}
                     </div>
-                    <div class="form-group">
-                        {{ Form::label('deposit', 'heure du depot', array('class' => 'awesome'))}}
-                        {{ Form::time('deposit')}}
-                    </div>
-                    <div class="form-group">
-                        {{ Form::label('chemin', 'chemin du fihchier', array('class' => 'awesome'))}}
-                        {{ Form::text('chemin', "/**/**/**/**")}}
-                    </div>
+
                     <div class="form-group">
                         {{Form::label('frequency', 'Frequence bro', array('class' => 'awesome'))}}
                         {{Form::select('frequency',
@@ -95,40 +102,154 @@
                             )
                         }}
                     </div>
+
                     <div class="form-group">
-                        {{Form::label('encoding', 'Encoding', array('class' => 'awesome'))}}
-                        {{Form::select('encoding',
-                                array('1' => 'ISO8859-1',
-                                      '2' => 'ISO8859-2',
-                                      '3' => 'ISO8859-3'
+                        {{ Form::label('deposit', 'heure du depot', array('class' => 'awesome'))}}
+                        {{ Form::time('deposit')}}
+                    </div>
+
+                    <h2>Format</h2>
+
+                        <div class="form-group">
+                            {{Form::label('name', 'Name', array('class' => 'awesome'))}}
+                            {{Form::select('name',
+                                    array('csv' => 'CSV',
+                                          'json' => 'JSON',
+                                          'xml' => 'XML'
+                                    )
+                                )
+                            }}
+                        </div>
+
+
+                <h1>Type</h1>
+                    <div class="form-group" id="typemodif" onload="myFunction()">
+                        {{Form::label('type', 'type', array('class' => 'awesome'))}}
+                        {{Form::select('type',
+                                array(
+                                    '0' => '-',
+                                    'contact' => 'contact',
+                                    'product' => 'product',
                                 )
                             )
                         }}
                     </div>
 
-                    <div class="form-group">
-                        {{ Form::label('firstname', 'prenom', array('class' => 'awesome'))}}
-                        {{ Form::text('firstname')}}
-                    </div>
+                <script>
+                    function getSelectedOption(sel) {
+                        var opt;
+                        for ( var i = 0, len = sel.options.length; i < len; i++ ) {
+                            opt = sel.options[i];
+                            if ( opt.selected === true ) {
+                                break;
+                            }
+                        }
+                        return opt;
+                    }
 
-                    <div class="form-group">
-                        {{ Form::label('lastname', 'Nom', array('class' => 'awesome'))}}
-                        {{ Form::text('nom')}}
-                    </div>
+                    document.getElementById('type').onchange = function() {
+                        var newaction = getSelectedOption(this).innerHTML;
+                        if(newaction == "product")
+                        {
+                            document.getElementById('contact').style.display = "none";
+                            document.getElementById('product').style.display = "block";
+                        }
+                        else if(newaction == "contact")
+                        {
+                            document.getElementById('contact').style.display = "block";
+                            document.getElementById('product').style.display = "none";
+                        }else
+                        {
+                            document.getElementById('contact').style.display = "none";
+                            document.getElementById('product').style.display = "none";
+                        }
 
-                    <div class="form-group">
-                        {{ Form::label('birthday', 'date de naissance', array('class' => 'awesome'))}}
-                        {{ Form::date('birthday')}}
-                    </div>
+                    };
+                </script>
 
-                    <div class="form-group">
-                        {{ Form::label('filename', 'Le nom du fichier', array('class' => 'awesome'))}}
-                        {{ Form::text('filename', "fichier.extention")}}
-                    </div>
+                <h1>Treatment</h1>
+                        <div id="contact" style="display: none">
+                            <div>Vous avez choisis CONTACT</div>
+                            <div class="form-group">
+                                {{ Form::label('firstname', 'prenom', array('class' => 'awesome'))}}
+                                {{ Form::text('firstname')}}
+                            </div>
 
-                    <div class="form-group">
-                        {{Form::submit('Click Me!')}}
-                    </div>
+                            <div class="form-group">
+                                {{ Form::label('lastname', 'Nom', array('class' => 'awesome'))}}
+                                {{ Form::text('lastname')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('adress', 'Adresse', array('class' => 'awesome'))}}
+                                {{ Form::text('adress')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('mail', 'E-mail', array('class' => 'awesome'))}}
+                                {{ Form::text('mail')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('country', 'Pays', array('class' => 'awesome'))}}
+                                {{ Form::text('country')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('city', 'Ville', array('class' => 'awesome'))}}
+                                {{ Form::text('city')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('postal', 'Code postale', array('class' => 'awesome'))}}
+                                {{ Form::text('postal')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('birthday', 'date de naissance', array('class' => 'awesome'))}}
+                                {{ Form::date('birthday')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('source', 'Source', array('class' => 'awesome'))}}
+                                {{ Form::text('source')}}
+                            </div>
+                            <div>Vous avez choisis CONTACT</div>
+                        </div>
+                        <div id="product" style="display: none">
+                            <div>Vous avez choisis PRODUCT</div>
+                            <div class="form-group">
+                                {{ Form::label('nameProduct', 'Nom', array('class' => 'awesome'))}}
+                                {{ Form::text('nameProduct')}}
+                            </div>
+
+                            <div class="form-group">
+                                {{ Form::label('description', 'Description', array('class' => 'awesome'))}}
+                                {{ Form::text('description')}}
+                            </div>
+
+                            <div class="form-group">
+                                {{ Form::label('birthday', 'date de naissance', array('class' => 'awesome'))}}
+                                {{ Form::date('birthday')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('image', 'Image', array('class' => 'awesome'))}}
+                                {{Form::file('image')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('price', 'Prix', array('class' => 'awesome'))}}
+                                {{ Form::number('price')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('currency', 'currency?', array('class' => 'awesome'))}}
+                                {{ Form::number('currency')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('source', 'Source', array('class' => 'awesome'))}}
+                                {{ Form::text('source')}}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('weblink', 'lien d\'internet', array('class' => 'awesome'))}}
+                                {{ Form::text('weblink')}}
+                            </div>
+                            <div>Vous avez choisis PRODUCT</div>
+                        </div>
+                <div class="form-group">
+                    {{Form::submit('Click Me!')}}
+                </div>
                 {!! Form::close() !!}
             </div>
         </div>
