@@ -57,9 +57,9 @@ Route::post('file/create', function (\Illuminate\Http\Request $request){
                 'mail' => 'required|regex:/^.+@.+$/i',
                 'country' => 'required|min:2|max:255',
                 'city' => 'required|min:2|max:255',
-                'postal' => 'required|min:2|max:255'
-                //'birthday' => 'date',
-                //'source' => 'required|min:2|max:255'
+                'postal' => 'required|min:2|max:255',
+                'birthday1' => 'required|date',
+                'source1' => 'required|min:2|max:255'
             ]);
             if($validatedData)
             {
@@ -70,8 +70,8 @@ Route::post('file/create', function (\Illuminate\Http\Request $request){
                 $country = $request->input('country');
                 $city = $request->input('city');
                 $postal = $request->input('postal');
-                //$birthday = $request->input('birthday');
-                //$source = $request->input('source');
+                $birthday = $request->input('birthday');
+                $source = $request->input('source');
 
             }
             else
@@ -84,9 +84,10 @@ Route::post('file/create', function (\Illuminate\Http\Request $request){
             $validatedData = $request->validate([
                 'nameProduct' => 'required|min:2|max:255',
                 'description' => 'required|min:2|max:255',
+                'birthday2' => 'required|date',
                 'price' => 'required',
                 'currency' => 'required',
-                'source' => 'required|min:2|max:255',
+                'source2' => 'required|min:2|max:255',
                 'weblink' => 'required|url'
 
             ]);

@@ -1,9 +1,9 @@
 {
     "meta": {
         "client": "aaa",
-        "filename": "aaa",
+        "filename": "aaaa",
         "frequency": "daily",
-        "deposit": "11:01",
+        "deposit": "11:11",
         "format": {
             "name": "csv",
             "firstline": 0,
@@ -17,5 +17,5 @@
             "path": "\/home\/user\/Documents\/contacts\/"
         }
     },
-    "type": "contact"
+    "type": "product"
 }

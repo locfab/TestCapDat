@@ -123,7 +123,7 @@
                         {{ session()->get('message') }}
                     </div>
                 @endif
-                
+
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -143,10 +143,6 @@
                     <div class="form-group">
                         {{ Form::label('filename', 'Le nom du fichier', array('class' => 'awesome'))}}
                         {{ Form::text('filename', \Illuminate\Support\Facades\Input::old('filename'), array('placeholder' => "fichier.extention"))}}
-                    </div>
-                    <div class="form-group">
-                        {{ Form::label('date', 'date a choisir', array('class' => 'awesome'))}}
-                        {{ Form::date('date')}}
                     </div>
 
                     <div class="form-group">
@@ -257,12 +253,12 @@
                                 {{ Form::text('postal')}}
                             </div>
                             <div class="form-group">
-                                {{ Form::label('birthday', 'date de naissance', array('class' => 'awesome'))}}
-                                {{ Form::date('birthday')}}
+                                {{ Form::label('source1', 'Source', array('class' => 'awesome'))}}
+                                {{ Form::text('source1')}}
                             </div>
                             <div class="form-group">
-                                {{ Form::label('source', 'Source', array('class' => 'awesome'))}}
-                                {{ Form::text('source')}}
+                                {{ Form::label('birthday1', 'date de naissance', array('class' => 'awesome'))}}
+                                {{ Form::date('birthday1')}}
                             </div>
                             <div>Vous avez choisis CONTACT</div>
                         </div>
@@ -279,8 +275,8 @@
                             </div>
 
                             <div class="form-group">
-                                {{ Form::label('birthday', 'date de naissance', array('class' => 'awesome'))}}
-                                {{ Form::date('birthday')}}
+                                {{ Form::label('birthday2', 'date de naissance', array('class' => 'awesome'))}}
+                                {{ Form::date('birthday2')}}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('image', 'Image', array('class' => 'awesome'))}}
@@ -295,8 +291,8 @@
                                 {{ Form::number('currency')}}
                             </div>
                             <div class="form-group">
-                                {{ Form::label('source', 'Source', array('class' => 'awesome'))}}
-                                {{ Form::text('source')}}
+                                {{ Form::label('source2', 'Source', array('class' => 'awesome'))}}
+                                {{ Form::text('source2')}}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('weblink', 'lien d\'internet', array('class' => 'awesome'))}}
