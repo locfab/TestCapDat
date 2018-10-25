@@ -19,9 +19,6 @@ Route::get('/superform', function () {
     return view('form');
 });
 
-Route::get('/fin', function () {
-    return view('fin');
-});
 Route::post('file/create', function (\Illuminate\Http\Request $request){
     $validatedData = $request->validate([
         'client' => 'required|min:2|max:100',
