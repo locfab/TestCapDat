@@ -70,7 +70,7 @@
             }
         </style>
     </head>
-    <body id="app-layout">
+    <body id="app-layout" onload="myFunction()">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -115,9 +115,7 @@
 
 
 
-        <div class="flex-center position-ref full-height">
             <div class="content">
-
                 @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}
@@ -163,20 +161,20 @@
 
                     <h2>Format</h2>
 
-                        <div class="form-group">
-                            {{Form::label('name', 'Name', array('class' => 'awesome'))}}
-                            {{Form::select('name',
-                                    array('csv' => 'CSV',
-                                          'json' => 'JSON',
-                                          'xml' => 'XML'
-                                    )
+                    <div class="form-group">
+                        {{Form::label('name', 'Name', array('class' => 'awesome'))}}
+                        {{Form::select('name',
+                                array('csv' => 'CSV',
+                                      'json' => 'JSON',
+                                      'xml' => 'XML'
                                 )
-                            }}
-                        </div>
+                            )
+                        }}
+                    </div>
 
 
                 <h1>Type</h1>
-                    <div class="form-group" id="typemodif" onload="myFunction()">
+                    <div class="form-group" id="typemodif">
                         {{Form::label('type', 'type', array('class' => 'awesome'))}}
                         {{Form::select('type',
                                 array(
@@ -199,31 +197,37 @@
                         }
                         return opt;
                     }
+                    var myFunction = function(){
+                        document.getElementById('contact').hidden = true;
+                        document.getElementById('product').hidden = true;
+                    }
+
 
                     document.getElementById('type').onchange = function() {
                         var newaction = getSelectedOption(this).innerHTML;
                         if(newaction == "product")
                         {
-                            document.getElementById('contact').style.display = "none";
-                            document.getElementById('product').style.display = "block";
+                            document.getElementById('contact').hidden = true;
+                            document.getElementById('product').hidden = false;
                         }
                         else if(newaction == "contact")
                         {
-                            document.getElementById('contact').style.display = "block";
-                            document.getElementById('product').style.display = "none";
+                            document.getElementById('contact').hidden = false;
+                            document.getElementById('product').hidden = true;
                         }else
                         {
-                            document.getElementById('contact').style.display = "none";
-                            document.getElementById('product').style.display = "none";
+                            document.getElementById('contact').hidden = true;
+                            document.getElementById('product').hidden = true;
                         }
 
                     };
                 </script>
 
                 <h1>Treatment</h1>
-                        <div id="contact" style="display: none">
+                        <div id="contact">
                             <div>Vous avez choisis CONTACT</div>
                             <div class="form-group">
+
                                 {{ Form::label('firstname', 'prenom', array('class' => 'awesome'))}}
                                 {{ Form::text('firstname')}}
                             </div>
@@ -262,7 +266,7 @@
                             </div>
                             <div>Vous avez choisis CONTACT</div>
                         </div>
-                        <div id="product" style="display: none">
+                        <div id="product">
                             <div>Vous avez choisis PRODUCT</div>
                             <div class="form-group">
                                 {{ Form::label('nameProduct', 'Nom', array('class' => 'awesome'))}}
@@ -278,9 +282,12 @@
                                 {{ Form::label('birthday2', 'date de naissance', array('class' => 'awesome'))}}
                                 {{ Form::date('birthday2')}}
                             </div>
-                            <div class="form-group">
-                                {{ Form::label('image', 'Image', array('class' => 'awesome'))}}
-                                {{Form::file('image')}}
+                            <div class="form-group" style="width: 25%; margin: auto">
+
+                                {{Form::label('image', 'Image', array('class' => 'awesome'))}}
+                                <div style="float: right">
+                                    {{Form::file('image')}}
+                                </div>
                             </div>
                             <div class="form-group">
                                 {{ Form::label('price', 'Prix', array('class' => 'awesome'))}}
@@ -288,7 +295,7 @@
                             </div>
                             <div class="form-group">
                                 {{ Form::label('currency', 'currency?', array('class' => 'awesome'))}}
-                                {{ Form::number('currency')}}
+                                {{ Form::text('currency')}}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('source2', 'Source', array('class' => 'awesome'))}}
@@ -305,6 +312,5 @@
                 </div>
                 {!! Form::close() !!}
             </div>
-        </div>
     </body>
 </html>

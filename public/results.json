@@ -1,11 +1,11 @@
 {
     "meta": {
         "client": "aaa",
-        "filename": "aaaa",
+        "filename": "dazklnd",
         "frequency": "daily",
-        "deposit": "11:11",
+        "deposit": "11:01",
         "format": {
-            "name": "csv",
+            "name": "aaa",
             "firstline": 0,
             "endline": "\n",
             "separator": ",",
@@ -17,5 +17,43 @@
             "path": "\/home\/user\/Documents\/contacts\/"
         }
     },
-    "type": "product"
+    "type": "product",
+    "treatment": [
+        {
+            "head": "nameProduct",
+            "location": "nameProduct",
+            "type": "string"
+        },
+        {
+            "head": "description",
+            "location": "description",
+            "type": "string"
+        },
+        {
+            "head": "birthday",
+            "format": "0001-11-11",
+            "location": "birthday",
+            "type": "date"
+        },
+        {
+            "head": "price",
+            "location": "price",
+            "type": "string"
+        },
+        {
+            "head": "currency",
+            "location": "currency",
+            "type": "string"
+        },
+        {
+            "head": "source2",
+            "location": "source2",
+            "type": "string"
+        },
+        {
+            "head": "weblink",
+            "location": "weblink",
+            "type": "string"
+        }
+    ]
 }

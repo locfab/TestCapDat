@@ -20,6 +20,7 @@ Route::get('/superform', function () {
 });
 
 Route::post('file/create', function (\Illuminate\Http\Request $request){
+    $inputs = $request->all();
     $validatedData = $request->validate([
         'client' => 'required|min:2|max:100',
         'filename' => 'required|min:2|max:100',
@@ -32,20 +33,13 @@ Route::post('file/create', function (\Illuminate\Http\Request $request){
 
     if($validatedData)
     {
-        $client = $request->input('client');
-        $filename = $request->input('filename');
-        $frequency = $request->input('frequency');
-        $deposit = $request->input('deposit');
-        $name = $request->input('name');
-        $type = $request->input('type');
-
         $monPetitTableau = array (
-            "meta"  => array("client" => $client, "filename" => $filename, "frequency" => $frequency, "deposit" => $deposit, "format" => array("name" => $name, "firstline" => 0, "endline" => "\n", "separator" => ",", "columns"=> '4'), 'encoding' => 'ISO8859-1', 'protocol' => array("mode"=> "HOSTED", "path" => "/home/user/Documents/contacts/")),
-            "type" => $type,
+            "meta"  => array("client" => $inputs["client"], "filename" => $inputs["filename"], "frequency" => $inputs["frequency"], "deposit" => $inputs["deposit"], "format" => array("name" => $inputs["client"], "firstline" => 0, "endline" => "\n", "separator" => ",", "columns"=> '4'), 'encoding' => 'ISO8859-1', 'protocol' => array("mode"=> "HOSTED", "path" => "/home/user/Documents/contacts/")),
+            "type" => $inputs["type"],
         );
 
 
-        if($type == 'contact')//contact
+        if($inputs["type"] == 'contact')//contact
         {
             $validatedData = $request->validate([
                 'firstname' => 'required|min:2|max:100',
@@ -55,48 +49,51 @@ Route::post('file/create', function (\Illuminate\Http\Request $request){
                 'country' => 'required|min:2|max:255',
                 'city' => 'required|min:2|max:255',
                 'postal' => 'required|min:2|max:255',
-                'birthday1' => 'required|date',
-                'source1' => 'required|min:2|max:255'
+                'source1' => 'required|min:2|max:255',
+                'birthday1' => 'required|date'
             ]);
             if($validatedData)
             {
-                $firstname = $request->input('firstname');
-                $lastname = $request->input('lastname');
-                $adress = $request->input('adress');
-                $mail = $request->input('mail');
-                $country = $request->input('country');
-                $city = $request->input('city');
-                $postal = $request->input('postal');
-                $birthday = $request->input('birthday');
-                $source = $request->input('source');
+                $monArray = [];
+                $data = array('firstname'=>$inputs["firstname"], 'lastname' => $inputs["lastname"], 'adress' => $inputs["adress"], 'mail' => $inputs["mail"], 'country' => $inputs["country"], 'city' => $inputs["city"], 'postal' => $inputs["postal"], 'source' => $inputs["source1"], 'birthday' => $inputs["birthday1"]);
+                foreach ($data as $key => $value) {
+                    if (!preg_match("/^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$/",$value))
+                        $monArray[] = array("head" => $key, "location" => $key, "type" => gettype($value));
+                    else
+                        $monArray[] = array("head" => $key, "format" => $value, "location" => $key, "type" => "date");
 
+                }
+                $monPetitTableau["treatment"] = $monArray;
             }
             else
             {
                 return redirect()->route('welcome')->withInput($request->all())->withErrors($validatedData->errors());
             }
         }
-        if($type == "product")
+        else if($inputs["type"] == "product")
         {
             $validatedData = $request->validate([
                 'nameProduct' => 'required|min:2|max:255',
                 'description' => 'required|min:2|max:255',
                 'birthday2' => 'required|date',
-                'price' => 'required',
+                'price' => 'required|integer',
                 'currency' => 'required',
                 'source2' => 'required|min:2|max:255',
-                'weblink' => 'required|url'
-
+                'weblink' => 'required|url',
             ]);
 
             if($validatedData)
             {
-                $nameProduct = $request->input('nameProduct');
-                $description = $request->input('description');
-                $price = $request->input('price');
-                $currency = $request->input('currency');
-                $source = $request->input('source');
-                $weblink = $request->input('weblink');
+                $monArray = [];
+                $data = array('nameProduct'=>$inputs["nameProduct"], 'description' => $inputs["description"],'birthday' => $inputs["birthday2"], 'price' => $inputs["price"], 'currency' => $inputs["currency"], 'source2' => $inputs["source2"], 'weblink' => $inputs["weblink"]);
+                foreach ($data as $key => $value) {
+                    if (!preg_match("/^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$/",$value))
+                        $monArray[] = array("head" => $key, "location" => $key, "type" => gettype($value));
+                    else
+                        $monArray[] = array("head" => $key, "format" => $value, "location" => $key, "type" => "date");
+
+                }
+                $monPetitTableau["treatment"] = $monArray;
             }
             else
             {
